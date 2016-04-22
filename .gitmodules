@@ -1,0 +1,9 @@
+[submodule "modules/python-zenity"]
+	path = modules/python-zenity
+	url = https://github.com/poulp/python-zenity.git
+[submodule "modules/pychromecast"]
+	path = modules/pychromecast
+	url = https://github.com/balloob/pychromecast.git
+[submodule "modules/phue"]
+	path = modules/phue
+	url = https://github.com/studioimaginaire/phue.git
