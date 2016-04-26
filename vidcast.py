@@ -4,11 +4,21 @@ import os
 import sys
 import time
 import socket
-import magic
+try:
+    import magic
+except ImportError:
+    print "Please run 'sudo pip install python-magic'."
+    sys.exit(1)
 import SimpleHTTPServer
 import SocketServer
 from modules import pythonzenity
 from modules import chromecast
+
+try:
+    import pychromecast as chromecast
+except ImportError:
+    print "Please run 'sudo pip2 install pychromecast."
+    sys.exit(2)
 
 selection = pythonzenity.FileSelection(multiple=True)
 print selection
