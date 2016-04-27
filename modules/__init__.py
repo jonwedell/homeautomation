@@ -1,3 +1,7 @@
 # Get the configuration
+
+import os
 import json
-configuration = json.loads(open("settings.json", "r").read())
+
+spath =  os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "settings.json")
+configuration = json.loads(open(spath, "r").read())
