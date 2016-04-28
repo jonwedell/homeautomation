@@ -64,7 +64,7 @@ else:
 
     # Wait until the right time to flash
     if minutes > 6:
-		print "Would wait " + str(minutes-6) + " minutes and then flash."
+		print "Waiting " + str(minutes-6) + " minutes before flash."
 		time.sleep((int(minutes) - 6) * 60)
 
     # Turn the lights on
