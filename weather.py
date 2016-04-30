@@ -27,6 +27,24 @@ configuration['bulbs'] = [x.encode() for x in configuration['bulbs']]
 my_bridge = Bridge(bridge_ip)
 my_bridge.connect()
 
+def get_average_temperature():
+    temps = []
+    
+    # Only get the last number of records as specified in the config
+    records = sorted(os.listdir(configuration['records_dir']))[-configuration['days']:]
+    
+    # Go through the records and read the temps
+    for record in records:
+        if os.path.isfile(os.path.join(configuration['records_dir'], record)):
+            with open(os.path.join(configuration['records_dir'], record), "r") as f:
+                try:
+                    temps.append(float(f.read()))
+                except ValueError:
+                    pass
+                
+    # Return the average temperature
+    return sum(temps) / float(len(temps))
+
 try:
     if len(sys.argv) > 1:
         temp_f = float(sys.argv[1])
@@ -54,7 +72,9 @@ try:
         open(os.path.join(configuration['records_dir'], str(time.time())), "w").write(str(temp_f))
 
     # Calculate what color the bulb should be
-    relative_temp = (float(temp_f) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
+    temp_diff_from_avg = temp_f - get_average_temperature()
+    relative_temp = (float(temp_diff_from_avg) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
+    #relative_temp = (float(temp_f) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
     if relative_temp > 1:
         relative_temp = 1
     if relative_temp < 0:
@@ -73,4 +93,5 @@ except Exception as e:
 if datetime.datetime.today().weekday() < 5:
     command =  {'transitiontime' : 0, 'on' : True, 'bri' : 254, 'xy': color}
     my_bridge.set_light(configuration['bulbs'], command)
+
 
