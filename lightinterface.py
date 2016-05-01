@@ -38,7 +38,7 @@ def bedroom():
 
 @app.route("/photo/<path:to_show>")
 def show_photo(to_show):
-    os.system("killall -9 c.py")
+    os.system("killall -9 photo_display.py")
     pid = os.fork()
     if pid == 0:
         print("Child execing")
