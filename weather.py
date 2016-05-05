@@ -74,12 +74,21 @@ try:
     # Calculate what color the bulb should be
     temp_diff_from_avg = temp_f - get_average_temperature()
     relative_temp = (float(temp_diff_from_avg) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
-    #relative_temp = (float(temp_f) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
+    
     if relative_temp > 1:
         relative_temp = 1
     if relative_temp < 0:
         relative_temp = 0
-    color = [relative_temp*(red[0]-blue[0]) + blue[0], relative_temp*(red[1]-blue[1]) + blue[1]]
+
+    # Scale from .15 to .65
+    x_color = relative_temp * .5 + .175
+    # The following is a custom parabola to generate good colors
+    y_color = -float(246)*x_color**2/91 + float(5183)*x_color/1820 - float(1901)/5200
+#-(float(1130)*(x_color**2)/399) + (float(1551)*x_color/532) -(float(1703)/4560)
+
+    # Graph the calculated color
+    color = [x_color, y_color]
+    print color
 
 # Set light to white if no access to weather
 except Exception as e:
