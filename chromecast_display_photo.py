@@ -4,8 +4,14 @@ import os
 import time
 import random
 from optparse import OptionParser
-from modules import chromecast
 from modules import pythonzenity
+
+try:
+    import pychromecast as chromecast
+except ImportError:
+    print "Please run 'sudo pip install pychromecast."
+    sys.exit(2)
+
 
 # Todo: Show based on mime type
 # Todo: implement local sever

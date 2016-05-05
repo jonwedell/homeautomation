@@ -12,12 +12,11 @@ except ImportError:
 import SimpleHTTPServer
 import SocketServer
 from modules import pythonzenity
-from modules import chromecast
 
 try:
     import pychromecast as chromecast
 except ImportError:
-    print "Please run 'sudo pip2 install pychromecast."
+    print "Please run 'sudo pip install pychromecast."
     sys.exit(2)
 
 selection = pythonzenity.FileSelection(multiple=True)
