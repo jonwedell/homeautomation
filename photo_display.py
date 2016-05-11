@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 """ Implements a photo viewer using cv2. """
 
 import os
