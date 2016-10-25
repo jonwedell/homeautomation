@@ -7,3 +7,6 @@
 [submodule "MySensors"]
 	path = arduino/MySensors
 	url = https://github.com/mysensors/MySensors.git
+[submodule "modules/pychromecast"]
+	path = modules/pychromecast
+	url = https://github.com/balloob/pychromecast.git
