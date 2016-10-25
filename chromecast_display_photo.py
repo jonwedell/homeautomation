@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 
 import os
+import sys
 import time
 import random
 from optparse import OptionParser
@@ -20,7 +21,7 @@ except ImportError:
 parser = OptionParser(usage="usage: %prog",version="%prog 1",description="Show photos on the photo display.")
 parser.add_option("--time", action="store", dest="time", default=20, type="int", help="The time to show each photo.")
 parser.add_option("--order", action="store_true", dest="order", default=False, help="Show the photos in order.")
-parser.add_option("--chromecast", action="store", dest="chromecast", default="Photo Display", type="str", help="Which chromecast to show the photo on.")
+parser.add_option("--chromecast", action="store", dest="chromecast", default="Living Room", type="str", help="Which chromecast to show the photo on.")
 
 # Options, parse 'em
 (options, selection) = parser.parse_args()
@@ -37,7 +38,7 @@ for adir in selection:
 	for root, dirs, files in os.walk(adir):
 		for file in files:
 			if file.endswith(".jpg") or file.endswith(".JPG") or file.endswith(".JPEG") or file.endswith(".jpeg"):
-				to_show.append("http://192.168.1.201/BDsYNs2A8egT1xNGyc4M6QixRbshxdVh/" + root.split("photo/")[1] + "/" + file)
+				to_show.append("http://192.168.1.200/BDsYNs2A8egT1xNGyc4M6QixRbshxdVh/" + root.split("photo/")[1] + "/" + file)
 
 print "Connecting to Chromecast..."
 
