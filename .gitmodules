@@ -4,3 +4,9 @@
 [submodule "modules/phue"]
 	path = modules/phue
 	url = https://github.com/studioimaginaire/phue.git
+[submodule "MySensors"]
+	path = arduino/MySensors
+	url = https://github.com/mysensors/MySensors.git
+[submodule "modules/pychromecast"]
+	path = modules/pychromecast
+	url = https://github.com/balloob/pychromecast.git

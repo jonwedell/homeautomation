@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 import os
 import sys
@@ -27,7 +27,7 @@ configuration['bulbs'] = [x.encode() for x in configuration['bulbs']]
 my_bridge = Bridge(bridge_ip)
 my_bridge.connect()
 
-def get_average_temperature():
+def get_average_temperature(cur_temp):
     temps = []
     
     # Only get the last number of records as specified in the config
@@ -42,8 +42,11 @@ def get_average_temperature():
                 except ValueError:
                     pass
                 
-    # Return the average temperature
-    return sum(temps) / float(len(temps))
+    # Return the current temperature if there are no records
+    try:
+        return sum(temps) / float(len(temps))
+    except ZeroDivisionError:
+        return cur_temp
 
 try:
     if len(sys.argv) > 1:
@@ -72,7 +75,7 @@ try:
         open(os.path.join(configuration['records_dir'], str(time.time())), "w").write(str(temp_f))
 
     # Calculate what color the bulb should be
-    temp_diff_from_avg = temp_f - get_average_temperature()
+    temp_diff_from_avg = temp_f - get_average_temperature(temp_f)
     relative_temp = (float(temp_diff_from_avg) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
     
     if relative_temp > 1:
