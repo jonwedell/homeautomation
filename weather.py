@@ -78,10 +78,10 @@ try:
     temp_diff_from_avg = temp_f - get_average_temperature(temp_f)
     relative_temp = (float(temp_diff_from_avg) - configuration['cold']) / (configuration['hot'] - configuration['cold'])
     
-    if relative_temp > 1:
-        relative_temp = 1
-    if relative_temp < 0:
-        relative_temp = 0
+#    if relative_temp > 1:
+#        relative_temp = 1
+#    if relative_temp < 0:
+#        relative_temp = 0
 
     # Scale from .15 to .65
     x_color = relative_temp * .5 + .175

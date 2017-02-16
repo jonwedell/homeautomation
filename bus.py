@@ -69,14 +69,14 @@ else:
 
     # Turn the lights on
     command = {'transitiontime':0, 'on': True, 'bri':254}
-    a.set_group(2, command)
+    a.set_group(5, command)
 
     # Make them long flash
-    a.set_group(2, 'alert', 'lselect')
+    a.set_group(5, 'alert', 'lselect')
     time.sleep(30)
 
     # Turn them off after a minute
     command = {'alert': 'none'}
-    a.set_group(2, command)
+    a.set_group(5, command)
 
 
