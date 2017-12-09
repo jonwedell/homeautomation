@@ -1,29 +1,32 @@
 #!/usr/bin/env python3
 
 import requests
-import optparse
+import argparse
 from modules import configuration
 
 # On or off
-optparser = optparse.OptionParser(description="Toggles motion between always recording and not.")
-optparser.add_option("--off", action="store_false", dest="record", default=True,
+argparser = argparse.ArgumentParser(description="Toggles motion between always recording and not.")
+argparser.add_argument("--off", action="store_false", dest="record", default=True,
                      help="Turn off recording rather than turn it on.")
-optparser.add_option("--host", action="store", dest="host", default=configuration["motion"]["host"], type="string",
+argparser.add_argument("--host", dest="host", default=configuration["motion"]["host"], type=str,
                      help="The Motion host. (IP or hostname).")
-optparser.add_option("--port", action="store", dest="port", default=configuration["motion"]["port"], type="int",
+argparser.add_argument("--port", dest="port", default=configuration["motion"]["port"], type=int,
                      help="The port of the command interface.")
-optparser.add_option("--user", action="store", dest="user", default=configuration["motion"]["user"], type="string",
+argparser.add_argument("--camera", dest="camera", default=[0], type=int, nargs='+',
+                     help="The camera number to toggle. Default of 0 means all.")
+argparser.add_argument("--user", dest="user", default=configuration["motion"]["user"], type=str,
                      help="The user to authenticate with Motion web interface.")
-optparser.add_option("--password", action="store", dest="password", default=configuration["motion"]["password"], type="string",
+argparser.add_argument("--password", dest="password", default=configuration["motion"]["password"], type=str,
                      help="The password to authenticate with Motion web interface")
 
-(options, cmd_input) = optparser.parse_args()
+args = argparser.parse_args()
 
 state = "on"
-if not options.record:
+if not args.record:
     state = "off"
 
-# Enable video recording
-r = requests.get("http://%s:%s/0/config/set?ffmpeg_output_movies=%s" % (options.host, options.port, state), auth=(options.user, options.password))
-# Fake constant motion
-r = requests.get("http://%s:%s/0/config/set?emulate_motion=%s" % (options.host, options.port, state), auth=(options.user, options.password))
+for camera in args.camera:
+    # Enable video recording
+    r = requests.get("http://%s:%s/%s/config/set?ffmpeg_output_movies=%s" % (args.host, args.port, camera, state), auth=(args.user, args.password))
+    # Fake constant motion
+    r = requests.get("http://%s:%s/%sconfig/set?emulate_motion=%s" % (args.host, args.port, camera, state), auth=(args.user, args.password))
