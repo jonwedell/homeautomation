@@ -18,7 +18,7 @@ configuration = configuration['weather']
 red = [0.674,0.322]
 blue = [.1691, .0441]
 weather_xml = "http://w1.weather.gov/xml/current_obs/%(citycode)s.xml" % configuration
-weather_json = "http://api.openweathermap.org/data/2.5/forecast/city?id=%(cityid)s&APPID=%(key)s" % configuration
+weather_json = "http://api.openweathermap.org/data/2.5/forecast?id=%(cityid)s&APPID=%(key)s" % configuration
 
 # Get rid of the unicode in the bulbs
 configuration['bulbs'] = [x.encode() for x in configuration['bulbs']]
